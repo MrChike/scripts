@@ -68,3 +68,4 @@ for i in range(len(REPO_PATH)):
     branch = retrieve_current_branch()
     print(current_path)
     commit_and_push(branch)
+

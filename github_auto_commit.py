@@ -3,8 +3,9 @@ import re
 import subprocess
 from datetime import datetime
 
-# Set your GitHub repository path and GitHub remote URL
+# Set your GitHub repository folder path
 REPO_PATH = [
+    # "/path/to/repo/folder", 
     "/home/mrchike/code/features/Leetcode", 
     "/home/mrchike/code/features/next13-lms-platform", 
     "/home/mrchike/code/features/next13-lms-platform-api",
@@ -13,7 +14,9 @@ REPO_PATH = [
     "/home/mrchike/code/scripts"
 ]
 
+# Set your GitHub remote URL
 GITHUB_URL = [
+    # "repo git url", 
     "git@github.com:MrChike/Leetcode.git",
     "git@github.com:MrChike/LMS.git",
     "git@github.com:MrChike/LMS-API.git",
@@ -58,11 +61,8 @@ def commit_and_push(branch):
     except subprocess.CalledProcessError as e:
         print(f"Error during git operations: {e}")
 
-# Run the commit and push function
 
-print(len(REPO_PATH))
 for i in range(len(REPO_PATH)):
-    print('i', i)
     os.chdir(REPO_PATH[i])
     current_path = os.getcwd()
     branch = retrieve_current_branch()

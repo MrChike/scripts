@@ -46,7 +46,7 @@ def commit_and_push(branch):
             print('branch', branch)
 
             # Commit changes with a timestamp message
-            commit_message = f"Automated commit: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+            commit_message = f"daily_commit: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
             subprocess.run(['git', 'commit', '-m', commit_message], check=True)
 
             # Push changes to GitHub

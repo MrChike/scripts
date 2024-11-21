@@ -33,7 +33,6 @@ def retrieve_current_branch():
 
     return ""
 
-
 def commit_and_push(branch):
     try:
         # Check if there are any changes (uncommitted files)

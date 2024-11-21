@@ -5,17 +5,15 @@ from datetime import datetime
 
 # Set your GitHub repository path and GitHub remote URL
 REPO_PATH = [
-    # "/path/to/folder", 
     "/home/mrchike/code/features/Leetcode", 
     "/home/mrchike/code/features/next13-lms-platform", 
     "/home/mrchike/code/features/next13-lms-platform-api",
     "/home/mrchike/code/projects_contributions/chikeegonu",
-    "/home/mrchike/code/projects_contributions/tensorflow"
+    "/home/mrchike/code/projects_contributions/tensorflow",
     "/home/mrchike/code/scripts"
 ]
 
 GITHUB_URL = [
-    # "git@github.com:username/repo_name.git",
     "git@github.com:MrChike/Leetcode.git",
     "git@github.com:MrChike/LMS.git",
     "git@github.com:MrChike/LMS-API.git",
@@ -55,7 +53,7 @@ def commit_and_push(branch):
             # Push changes to GitHub
             subprocess.run(['git', 'push', 'origin', branch], check=True)
 
-            print(f"Changes pushed to GitHub successfully.")
+            print(f"Changes pushed to GitHub successfully...")
         else:
             print(f"No changes detected at {datetime.now()}. Nothing to commit.")
     except subprocess.CalledProcessError as e:
@@ -63,7 +61,9 @@ def commit_and_push(branch):
 
 # Run the commit and push function
 
+print(len(REPO_PATH))
 for i in range(len(REPO_PATH)):
+    print('i', i)
     os.chdir(REPO_PATH[i])
     current_path = os.getcwd()
     branch = retrieve_current_branch()

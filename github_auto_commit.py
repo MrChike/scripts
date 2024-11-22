@@ -46,7 +46,6 @@ def commit_and_push(branch):
 
             # Add all changes to staging
             subprocess.run(['git', 'add', '.'], check=True)
-            print('branch', branch)
 
             # Commit changes with a timestamp message
             commit_message = f"daily_commit: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"

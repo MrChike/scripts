@@ -5,9 +5,9 @@ from datetime import datetime
 
 # Set your GitHub repository folder path
 REPO_PATH = [
-    # "/path/to/repo/folder", 
-    "/home/mrchike/code/features/Leetcode", 
-    "/home/mrchike/code/features/next13-lms-platform", 
+    # "/path/to/repo/folder",
+    "/home/mrchike/code/features/Leetcode",
+    "/home/mrchike/code/features/next13-lms-platform",
     "/home/mrchike/code/features/next13-lms-platform-api",
     "/home/mrchike/code/projects_contributions/chikeegonu",
     "/home/mrchike/code/projects_contributions/tensorflow",
@@ -16,7 +16,7 @@ REPO_PATH = [
 
 # Set your GitHub remote URL
 GITHUB_URL = [
-    # "repo git url", 
+    # "repo git url",
     "git@github.com:MrChike/Leetcode.git",
     "git@github.com:MrChike/LMS.git",
     "git@github.com:MrChike/LMS-API.git",
@@ -33,22 +33,33 @@ def retrieve_current_branch():
     if match:
         result = match.group(1).strip()
         return result
-
     return ""
+
+def is_ahead_of_remote(branch):
+    """Check if local branch is ahead of remote"""
+    try:
+        # Fetch the latest changes from the remote without merging them
+        subprocess.run(['git', 'fetch'], check=True)
+
+        # Compare the local branch with the remote (check if there are commits on local not on remote)
+        result = subprocess.run(
+            ['git', 'log', f'origin/{branch}..{branch}', '--oneline'],
+            capture_output=True,
+            text=True
+        )
+
+        # If there are any commits, it means the local branch is ahead
+        if result.stdout.strip():
+            return True
+        return False
+    except subprocess.CalledProcessError as e:
+        print(f"Error checking if branch is ahead of remote: {e}")
+        return False
 
 def commit_and_push(branch):
     try:
         # Check if there are any changes (uncommitted files)
-        # status = subprocess.run(['git', 'status', '--porcelain'], capture_output=True, text=True)
-        status = subprocess.run(['git', 'status'], capture_output=True, text=True)
-        print('status', status)
-
-
-        if "Your branch is ahead of" in status.stdout:
-            print(f"merge_detect_commit {datetime.now()}. Pushing changes...")
-
-            subprocess.run(['git', 'push', 'origin', branch], check=True)
-            print(f"Branch Merge pushed to GitHub successfully...")
+        status = subprocess.run(['git', 'status', '--porcelain'], capture_output=True, text=True)
 
         if status.stdout.strip():  # If there are changes
             print(f"Changes detected at {datetime.now()}. Committing and pushing...")
@@ -60,20 +71,22 @@ def commit_and_push(branch):
             commit_message = f"daily_commit: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
             subprocess.run(['git', 'commit', '-m', commit_message], check=True)
 
+        # Check if the branch is ahead of the remote (even if not detected by `git status`)
+        if is_ahead_of_remote(branch):
+            print(f"Your local branch {branch} is ahead of the remote branch. Pushing changes...")
             # Push changes to GitHub
             subprocess.run(['git', 'push', 'origin', branch], check=True)
 
             print(f"Changes pushed to GitHub successfully...")
         else:
-            print(f"No changes detected at {datetime.now()}. Nothing to commit.")
+            print(f"Your branch {branch} is up to date with the remote or nothing to commit.")
+
     except subprocess.CalledProcessError as e:
         print(f"Error during git operations: {e}")
-
 
 for i in range(len(REPO_PATH)):
     os.chdir(REPO_PATH[i])
     current_path = os.getcwd()
     branch = retrieve_current_branch()
-    print(current_path)
+    print(f"Working in repository: {current_path}")
     commit_and_push(branch)
-

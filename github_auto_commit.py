@@ -46,7 +46,7 @@ def commit_and_push(branch):
 
             # Push changes to GitHub
             subprocess.run(['git', 'push', 'origin', branch], check=True)
-            print(f"Changes pushed to GitHub successfully...")
+            print(f"Branch Merge pushed to GitHub successfully...")
 
         if status.stdout.strip():  # If there are changes
             print(f"Changes detected at {datetime.now()}. Committing and pushing...")

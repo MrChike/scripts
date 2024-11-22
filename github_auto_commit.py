@@ -44,7 +44,6 @@ def commit_and_push(branch):
         if "Your branch is ahead of" in status.stdout:
             print(f"merge_detect_commit {datetime.now()}. Pushing changes...")
 
-            # Push changes to GitHub
             subprocess.run(['git', 'push', 'origin', branch], check=True)
             print(f"Branch Merge pushed to GitHub successfully...")
 

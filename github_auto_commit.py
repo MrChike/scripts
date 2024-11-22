@@ -26,7 +26,7 @@ GITHUB_URL = [
 ]
 
 def retrieve_current_branch():
-    branch_list = subprocess.run(['git', 'branch'], capture_output=True, text=True).stdout.strip()
+    branch_list = subprocess.run(['git', 'branch', '--porcelain'], capture_output=True, text=True).stdout.strip()
     pattern = r"\* (\S+)"
     match = re.search(pattern, branch_list)
 

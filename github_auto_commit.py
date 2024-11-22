@@ -79,7 +79,8 @@ def commit_and_push(branch):
 
             print(f"Changes pushed to GitHub successfully...")
         else:
-            print(f"Your local branch {branch} is up to date with the remote or nothing to commit.", end="\n")
+            print(f"Your local branch {branch} is up to date with the remote or nothing to commit.")
+            print("\n")
 
     except subprocess.CalledProcessError as e:
         print(f"Error during git operations: {e}")

@@ -40,7 +40,13 @@ def commit_and_push(branch):
     try:
         # Check if there are any changes (uncommitted files)
         status = subprocess.run(['git', 'status', '--porcelain'], capture_output=True, text=True)
-        print('status', status)
+
+        if "Your branch is ahead of" in status.stdout:
+            print(f"merge_detect_commit {datetime.now()}. Pushing changes...")
+
+            # Push changes to GitHub
+            subprocess.run(['git', 'push', 'origin', branch], check=True)
+            print(f"Changes pushed to GitHub successfully...")
 
         if status.stdout.strip():  # If there are changes
             print(f"Changes detected at {datetime.now()}. Committing and pushing...")

@@ -26,7 +26,7 @@ GITHUB_URL = [
 ]
 
 def retrieve_current_branch():
-    branch_list = subprocess.run(['git', 'branch', '--porcelain'], capture_output=True, text=True).stdout.strip()
+    branch_list = subprocess.run(['git', 'branch'], capture_output=True, text=True).stdout.strip()
     pattern = r"\* (\S+)"
     match = re.search(pattern, branch_list)
 
@@ -40,15 +40,9 @@ def commit_and_push(branch):
     try:
         # Check if there are any changes (uncommitted files)
         status = subprocess.run(['git', 'status'], capture_output=True, text=True)
+        print('status', status)
 
-        if "Your branch is ahead of" in status.stdout:
-            print(f"Your branch is ahead of the remote at {datetime.now()}. Pushing changes...")
-
-            # Push changes to GitHub
-            subprocess.run(['git', 'push', 'origin', branch], check=True)
-            print(f"Changes pushed to GitHub successfully...")
-
-        elif status.stdout.strip():  # If there are changes to commit
+        if status.stdout.strip():  # If there are changes
             print(f"Changes detected at {datetime.now()}. Committing and pushing...")
 
             # Add all changes to staging
@@ -64,7 +58,6 @@ def commit_and_push(branch):
             print(f"Changes pushed to GitHub successfully...")
         else:
             print(f"No changes detected at {datetime.now()}. Nothing to commit.")
-    
     except subprocess.CalledProcessError as e:
         print(f"Error during git operations: {e}")
 
@@ -75,3 +68,4 @@ for i in range(len(REPO_PATH)):
     branch = retrieve_current_branch()
     print(current_path)
     commit_and_push(branch)
+

@@ -6,11 +6,14 @@ from datetime import datetime
 # Set your GitHub repository folder path
 REPO_PATH = [
     # "/path/to/repo/folder",
-    "/home/mrchike/code/features/Leetcode",
-    "/home/mrchike/code/features/next13-lms-platform",
-    "/home/mrchike/code/features/next13-lms-platform-api",
-    "/home/mrchike/code/projects_contributions/chikeegonu",
-    "/home/mrchike/code/projects_contributions/tensorflow",
+    "/home/mrchike/code/projects/Leetcode",
+    "/home/mrchike/code/projects/next13-lms-platform",
+    "/home/mrchike/code/projects/next13-lms-platform-api",
+    "/home/mrchike/code/projects/chikeegonu",
+    "/home/mrchike/code/contributions/tensorflow",
+    "/home/mrchike/code/contributions/flink",
+    "/home/mrchike/code/contributions/odoo",
+    "/home/mrchike/code/contributions/spotify",
     "/home/mrchike/code/scripts"
 ]
 
@@ -22,6 +25,9 @@ GITHUB_URL = [
     "git@github.com:MrChike/LMS-API.git",
     "git@github.com:MrChike/chikeegonu.git",
     "git@github.com:MrChike/tensorflow.git",
+    "git@github.com:MrChike/flink.git",
+    "git@github.com:MrChike/odoo.git",
+    "git@github.com:MrChike/spotify-clone.git",
     "git@github.com:MrChike/automate.git"
 ]
 

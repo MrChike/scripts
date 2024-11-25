@@ -1,5 +1,6 @@
 import time
 import os
+import random
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -21,13 +22,14 @@ driver = webdriver.Chrome(service=service, options=options)
 # Function to log in to LinkedIn
 def login_to_linkedin(username, password):
     driver.get("https://www.linkedin.com/login")
-    time.sleep(2)
+    time.sleep(3)
     
     driver.find_element(By.ID, "username").send_keys(username)
     driver.find_element(By.ID, "password").send_keys(password)
     driver.find_element(By.XPATH, "//button[@type='submit']").click()
 
-    time.sleep(2)  # Wait for the login to complete
+    time.sleep(5)  # Wait for the login to complete
+    print('Logged in Successfuly!')
 
 # Function to search for jobs
 def search_jobs(keyword, location):
@@ -48,16 +50,21 @@ def search_jobs(keyword, location):
     location_box.send_keys(Keys.RETURN)
     time.sleep(5)  # Wait for search results to load
 
+
 # Function to extract job listings
 def extract_job_listings():
     # Find all job cards in the search results
     job_cards = driver.find_elements(By.CLASS_NAME, "scaffold-layout__list-container")
-    print('job_cards', job_cards)
+    # job_cards = driver.find_elements(By.CLASS_NAME, "scaffold-layout__list-detail")
+
+    time.sleep(3)
+    # Print the current URL after hitting enter
+    job_search_url = driver.current_url
+    print(f"job_search URL after search: {job_search_url}")
     
     job_listings = []
 
     for job_card in job_cards:
-        print(job_card)
         title = job_card.text
         link = job_card.find_element(By.TAG_NAME, 'a').get_attribute("href")
         job_listings.append({"Title": title, "Link": link})
@@ -72,6 +79,8 @@ def main():
     
     keyword = "python"
     location = "Germany"
+
+    print("Country Selected:", location)
 
     # Log in to LinkedIn
     login_to_linkedin(username, password)

@@ -1,6 +1,8 @@
+import requests
 import time
 import os
 import random
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -53,24 +55,10 @@ def search_jobs(keyword, location):
 
 # Function to extract job listings
 def extract_job_listings():
-    # Find all job cards in the search results
-    job_cards = driver.find_elements(By.CLASS_NAME, "scaffold-layout__list-container")
-    # job_cards = driver.find_elements(By.CLASS_NAME, "scaffold-layout__list-detail")
-
-    time.sleep(3)
-    # Print the current URL after hitting enter
+    time.sleep(3)  # Wait for search results to load
     job_search_url = driver.current_url
-    print(f"job_search URL after search: {job_search_url}")
-    
-    job_listings = []
+    return job_search_url
 
-    for job_card in job_cards:
-        title = job_card.text
-        link = job_card.find_element(By.TAG_NAME, 'a').get_attribute("href")
-        job_listings.append({"Title": title, "Link": link})
-        print("\n")
-    
-    return job_listings
 
 # Main function to run the script
 def main():
@@ -79,6 +67,7 @@ def main():
     
     keyword = "python"
     location = "Germany"
+    # location = "Poland"
 
     print("Country Selected:", location)
 
@@ -93,11 +82,10 @@ def main():
 
     # Print the job listings
     if jobs:
-        print(f"Found {len(jobs)} jobs:")
-        for job in jobs:
-            print(f"Title: {job['Title']}, Link: {job['Link']}")
+        print(jobs)
     else:
         print("No job listings found.")
+
 
 # Run the script
 if __name__ == "__main__":

@@ -97,3 +97,8 @@ for i in range(len(REPO_PATH)):
     branch = retrieve_current_branch()
     print(f"Working in repository: {current_path}")
     commit_and_push(branch)
+
+"""
+In your terminal run the command `crontab -e` then add and save the below command
+0 5,17 * * * /usr/bin/python3 /home/mrchike/code/scripts/github_auto_commit.py
+"""

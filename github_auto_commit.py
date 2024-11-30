@@ -14,7 +14,8 @@ REPO_PATH = [
     "/home/mrchike/code/contributions/flink",
     "/home/mrchike/code/contributions/odoo",
     "/home/mrchike/code/contributions/spotify",
-    "/home/mrchike/code/scripts"
+    "/home/mrchike/code/scripts",
+    "/home/mrchike/code/hackathons"
 ]
 
 # Set your GitHub remote URL
@@ -28,7 +29,8 @@ GITHUB_URL = [
     "git@github.com:MrChike/flink.git",
     "git@github.com:MrChike/odoo.git",
     "git@github.com:MrChike/spotify-clone.git",
-    "git@github.com:MrChike/automate.git"
+    "git@github.com:MrChike/automate.git",
+    "git@github.com:MrChike/hackathons.git",
 ]
 
 def retrieve_current_branch():

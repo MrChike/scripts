@@ -38,7 +38,7 @@ services:
     depends_on:
     - "postgres"
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://root:root@postgres:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL: postgres://root:root@postgres:5432/root
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: root
     ports:

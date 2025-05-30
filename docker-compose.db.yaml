@@ -1,0 +1,89 @@
+version: "3.8"
+
+# Your Dev DB Setup on the Go...
+# Run script with `docker-compose -f path/to/docker-compose.db.yaml up`
+
+services:
+
+  postgres:
+    image: postgres
+    restart: always
+    container_name: compose_postgres
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+
+  timescaledb:
+    image: timescale/timescaledb-ha:pg17
+    depends_on:
+    - "postgres"
+    restart: always
+    container_name: compose_timescaledb
+    environment:
+      POSTGRES_PASSWORD: root
+
+  graphql-engine:
+    # http://localhost:8082/console/
+    image: hasura/graphql-engine:v1.0.0-beta.6
+    ports:
+    - "8082:8080"
+    depends_on:
+    - "postgres"
+    restart: always
+    container_name: compose_graphql-engine
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://root:root@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: root
+
+  pgadmin4:
+    # http://localhost:8083/login Login details - Email Address:root@mailinator.com, Password: root 
+    # docker container inspect compose_postgres | grep IPAddress      ----> 172.21.0.X
+    # create db server: Connection settings: db_host=172.21.0.X, db_port=5432, db_name=root, db_user=root, db_password=root
+    image: dpage/pgadmin4:9.2.0
+    restart: always
+    container_name: compose_pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@mailinator.com
+      PGADMIN_DEFAULT_PASSWORD: root
+      GLOBALLY_DELIVERABLE: "True"
+    depends_on:
+    - "postgres"
+    ports:
+      - 8083:80
+
+  mongo:
+    image: mongo:7.0.5
+    restart: always
+    container_name: compose_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  mongo-express:
+    # http://localhost:8081/
+    image: mongo-express
+    restart: always
+    container_name: compose_mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      - mongo
+
+  redis:
+    image: redis:8.0.1-bookworm
+    container_name: compose_redis
+    command: ["redis-server", "--requirepass", "root"]
+
+  redisinsight:
+    image: redis/redisinsight
+    container_name: compose_redisinsight
+    restart: always
+    ports:
+      - "5540:5540"

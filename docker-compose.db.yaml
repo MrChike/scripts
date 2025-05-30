@@ -1,7 +1,7 @@
 version: "3.8"
 
 # run the following commands
-# `docker network create shared_bridge` → → → enables stable service discovery (e.g., redis://root:root@redis:6379/0) across multiple Docker Compose files without relying on changing container IPs.
+# `docker network create shared_bridge` → → → enables stable service discovery (e.g., redis://root:root@redis_cache:6379/0) across multiple Docker Compose files without relying on changing container IPs.
 #  docker-compose -f path/to/compose-file.yaml up
 
 services:
@@ -89,9 +89,9 @@ services:
     ports:
       - 8081:8081
 
-  redis:
+  redis_cache:
     image: redis:8.0.1-bookworm
-    container_name: compose_redis
+    container_name: compose_redis_cache
     command: ["redis-server", "--requirepass", "root"]
     restart: always
     networks:

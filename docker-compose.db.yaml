@@ -1,7 +1,8 @@
 version: "3.8"
 
-# Your Dev DB Setup on the Go...
-# Run script with `docker-compose -f path/to/docker-compose.db.yaml up`
+# docker network create shared_bridge → → → enables stable service discovery (e.g., redis://root:root@redis:6379/0) across multiple Docker Compose files without relying on changing container IPs.
+# docker-compose -f path/to/compose-file.yaml up
+
 
 services:
 
@@ -13,15 +14,20 @@ services:
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
+    ports:
+    - "5432:5432" 
+    networks:
+      - shared_net
 
   timescaledb:
     image: timescale/timescaledb-ha:pg17
     depends_on:
     - "postgres"
-    restart: always
     container_name: compose_timescaledb
     environment:
       POSTGRES_PASSWORD: root
+    networks:
+      - shared_net
 
   graphql-engine:
     # http://localhost:8082/console/
@@ -30,19 +36,19 @@ services:
     - "8082:8080"
     depends_on:
     - "postgres"
-    restart: always
     container_name: compose_graphql-engine
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://root:root@postgres:5432/postgres
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: root
+    networks:
+      - shared_net
 
   pgadmin4:
     # http://localhost:8083/login Login details - Email Address:root@mailinator.com, Password: root 
     # docker container inspect compose_postgres | grep IPAddress      ----> 172.21.0.X
     # create db server: Connection settings: db_host=172.21.0.X, db_port=5432, db_name=root, db_user=root, db_password=root
     image: dpage/pgadmin4:9.2.0
-    restart: always
     container_name: compose_pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: root@mailinator.com
@@ -52,6 +58,8 @@ services:
     - "postgres"
     ports:
       - 8083:80
+    networks:
+      - shared_net
 
   mongo:
     image: mongo:7.0.5
@@ -60,11 +68,14 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+    - "27017:27017"
+    networks:
+      - shared_net
 
   mongo-express:
     # http://localhost:8081/
     image: mongo-express
-    restart: always
     container_name: compose_mongo-express
     ports:
       - 8081:8081
@@ -75,15 +86,28 @@ services:
       ME_CONFIG_BASICAUTH: "false"
     depends_on:
       - mongo
+    networks:
+      - shared_net
 
   redis:
     image: redis:8.0.1-bookworm
     container_name: compose_redis
     command: ["redis-server", "--requirepass", "root"]
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - shared_net
 
   redisinsight:
     image: redis/redisinsight
     container_name: compose_redisinsight
-    restart: always
     ports:
       - "5540:5540"
+    networks:
+      - shared_net
+
+networks:
+  shared_net:
+    external: true
+    name: shared_bridge

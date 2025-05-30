@@ -3,46 +3,45 @@ version: "3.8"
 # docker network create shared_bridge → → → enables stable service discovery (e.g., redis://root:root@redis:6379/0) across multiple Docker Compose files without relying on changing container IPs.
 # docker-compose -f path/to/compose-file.yaml up
 
-
 services:
 
   postgres:
     image: postgres
-    restart: always
     container_name: compose_postgres
+    restart: always
     shm_size: 128mb
+    networks:
+      - shared_net
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
     ports:
     - "5432:5432" 
-    networks:
-      - shared_net
 
   timescaledb:
     image: timescale/timescaledb-ha:pg17
-    depends_on:
-    - "postgres"
     container_name: compose_timescaledb
-    environment:
-      POSTGRES_PASSWORD: root
     networks:
       - shared_net
+    depends_on:
+    - "postgres"
+    environment:
+      POSTGRES_PASSWORD: root
 
   graphql-engine:
     # http://localhost:8082/console/
     image: hasura/graphql-engine:v1.0.0-beta.6
-    ports:
-    - "8082:8080"
+    container_name: compose_graphql-engine
+    networks:
+      - shared_net
     depends_on:
     - "postgres"
-    container_name: compose_graphql-engine
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://root:root@postgres:5432/postgres
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       HASURA_GRAPHQL_ADMIN_SECRET: root
-    networks:
-      - shared_net
+    ports:
+    - "8082:8080"
 
   pgadmin4:
     # http://localhost:8083/login Login details - Email Address:root@mailinator.com, Password: root 
@@ -50,62 +49,62 @@ services:
     # create db server: Connection settings: db_host=172.21.0.X, db_port=5432, db_name=root, db_user=root, db_password=root
     image: dpage/pgadmin4:9.2.0
     container_name: compose_pgadmin4
+    networks:
+      - shared_net
+    depends_on:
+    - "postgres"
     environment:
       PGADMIN_DEFAULT_EMAIL: root@mailinator.com
       PGADMIN_DEFAULT_PASSWORD: root
       GLOBALLY_DELIVERABLE: "True"
-    depends_on:
-    - "postgres"
     ports:
       - 8083:80
-    networks:
-      - shared_net
 
   mongo:
     image: mongo:7.0.5
-    restart: always
     container_name: compose_mongo
+    restart: always
+    networks:
+      - shared_net
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
     ports:
     - "27017:27017"
-    networks:
-      - shared_net
 
   mongo-express:
     # http://localhost:8081/
     image: mongo-express
     container_name: compose_mongo-express
-    ports:
-      - 8081:8081
+    networks:
+      - shared_net
+    depends_on:
+      - mongo
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
       ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
       ME_CONFIG_BASICAUTH: "false"
-    depends_on:
-      - mongo
-    networks:
-      - shared_net
+    ports:
+      - 8081:8081
 
   redis:
     image: redis:8.0.1-bookworm
     container_name: compose_redis
     command: ["redis-server", "--requirepass", "root"]
     restart: always
-    ports:
-      - "6379:6379"
     networks:
       - shared_net
+    ports:
+      - "6379:6379"
 
   redisinsight:
     image: redis/redisinsight
     container_name: compose_redisinsight
-    ports:
-      - "5540:5540"
     networks:
       - shared_net
+    ports:
+      - "5540:5540"
 
 networks:
   shared_net:

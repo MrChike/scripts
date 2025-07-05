@@ -1,0 +1,60 @@
+site_name: Media App Docs
+site_url: http://localhost:8000
+repo_name: MrChike/media_app
+repo_url: https://github.com/MrChike/media_app
+theme:
+  name: material
+  icon:
+    repo: octicons/mark-github-24
+  font:
+    text: Ubuntu Mono
+  features:
+    - navigation.tabs
+    - toc.integrate
+
+  markdown_extensions:
+    - material.extensions.preview:
+        configurations:
+          - targets:
+              include:
+                - docs/*
+
+  palette:
+    # Palette toggle for automatic mode
+    
+    - media: "(prefers-color-scheme: default)"
+      primary: deep orange
+      scheme: slate
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: black
+      scheme: default 
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: blue grey
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+copyright: Copyright &copy; 2016 - 2025 Chike Egonu
+
+extra:
+  social:
+    - icon: material/linkedin
+      link: https://www.linkedin.com/in/chikeegonu/
+      name: LinkedIn Profile
+    - icon: octicons/person-fill-24
+      link: https://mrchike.github.io/chikeegonu/
+      name: Projects Portfolio️
+    - icon: fontawesome/brands/github
+      link: https://github.com/MrChike
+      name: Github Profile

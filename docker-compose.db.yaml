@@ -7,12 +7,10 @@ version: "3.8"
 services:
 
   postgres:
-    image: postgres
+    image: postgres:16.9-bullseye
     container_name: compose_postgres
     restart: always
     shm_size: 128mb
-    networks:
-      - shared_net
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
@@ -22,8 +20,6 @@ services:
   timescaledb:
     image: timescale/timescaledb-ha:pg17
     container_name: compose_timescaledb
-    networks:
-      - shared_net
     depends_on:
     - "postgres"
     environment:
@@ -33,8 +29,6 @@ services:
     # http://localhost:8082/console/
     image: hasura/graphql-engine:v1.0.0-beta.6
     container_name: compose_graphql-engine
-    networks:
-      - shared_net
     depends_on:
     - "postgres"
     environment:
@@ -48,10 +42,8 @@ services:
     # http://localhost:8083/login Login details - Email Address:root@mailinator.com, Password: root 
     # docker container inspect compose_postgres | grep IPAddress      ----> 172.21.0.X
     # create db server: Connection settings: db_host=172.21.0.X, db_port=5432, db_name=root, db_user=root, db_password=root
-    image: dpage/pgadmin4:9.2.0
+    image: dpage/pgadmin4:9.4.0
     container_name: compose_pgadmin4
-    networks:
-      - shared_net
     depends_on:
     - "postgres"
     environment:
@@ -65,8 +57,6 @@ services:
     image: mongo:7.0.5
     container_name: compose_mongo
     restart: always
-    networks:
-      - shared_net
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
@@ -75,10 +65,8 @@ services:
 
   mongo-express:
     # http://localhost:8081/
-    image: mongo-express
+    image: mongo-express:1.0.2-20-alpine3.19
     container_name: compose_mongo-express
-    networks:
-      - shared_net
     depends_on:
       - mongo
     environment:
@@ -94,20 +82,11 @@ services:
     container_name: compose_redis_cache
     command: ["redis-server", "--requirepass", "root"]
     restart: always
-    networks:
-      - shared_net
     ports:
       - "6379:6379"
 
   redisinsight:
-    image: redis/redisinsight
+    image: redis/redisinsight:2.70
     container_name: compose_redisinsight
-    networks:
-      - shared_net
     ports:
       - "5540:5540"
-
-networks:
-  shared_net:
-    external: true
-    name: shared_bridge

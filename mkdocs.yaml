@@ -1,3 +1,6 @@
+# pip install mkdocs-material && mkdocs new docs && mkdocs build -f docs/mkdocs.yml
+# app.mount("/docs", StaticFiles(directory="docs/site", html=True), name="docs")
+
 site_name: Media App Docs
 site_url: http://localhost:8000
 repo_name: MrChike/media_app

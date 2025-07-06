@@ -1,4 +1,5 @@
 # pip install mkdocs-material && mkdocs new docs && mkdocs build -f docs/mkdocs.yml
+# from fastapi.staticfiles import StaticFiles
 # app.mount("/docs", StaticFiles(directory="docs/site", html=True), name="docs")
 
 site_name: Media App Docs

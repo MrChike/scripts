@@ -3,7 +3,7 @@
 # app.mount("/docs", StaticFiles(directory="docs/site", html=True), name="docs")
 
 site_name: Media App Docs
-site_url: http://localhost:8000 # Update to your site url
+site_url: http://localhost:8000
 repo_name: MrChike/media_app
 repo_url: https://github.com/MrChike/media_app
 theme:
@@ -11,6 +11,7 @@ theme:
   # NB: logo.png should be created under docs/assets/images/
   # This is what makes it visible under site/assets/images/
   logo: assets/images/logo.png
+  favicon: assets/images/logo.png
   icon:
     repo: octicons/mark-github-24
   font:
@@ -18,6 +19,7 @@ theme:
   features:
     - navigation.tabs
     - toc.integrate
+    - content.code.copy
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme: default)"
@@ -50,6 +52,14 @@ theme:
               include:
                 - docs/*
 
+nav:
+  - index.md
+  - features.md
+  - architecture.md
+  - contributing.md
+  - changelog.md
+  - contact.md
+
 extra:
   social:
     - icon: material/linkedin
@@ -62,4 +72,4 @@ extra:
       link: https://github.com/MrChike
       name: My Github Profile
 
-copyright: Copyright &copy; 2016 - 2025 Chike Egonu
+copyright: Copyright ©️ 2025 - Infinityyyyy & Beyond 🚀 - Chike Egonu

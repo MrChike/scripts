@@ -33,9 +33,9 @@ format = "[](fg:black bg:#f9a600)[🕒 $duration](bg:$style fg:black)[](fg
 [directory]
 style = "#c05303"
 truncate_to_repo = false
-fish_style_pwd_dir_length = 1
-format = "[](fg:black bg:#c05303)[$path[$read_only](bg:$style fg:black)](bg:$style fg:black)[](fg:$style)"
-read_only = " "
+fish_style_pwd_dir_length = 3
+format = "[📁 ](fg:black bg:#c05303)[$path[$read_only](bg:$style fg:black)](bg:$style fg:black)[](fg:$style)"
+read_only = " 🔒"
 
 [docker_context]
 style = "fg:black bg:#eb9606"
@@ -58,11 +58,11 @@ format = "\b[ ](bg:$style)[ \\($state( $progress_current/$progress_total)\\)](fg
 style = "#d8712c"
 format = "(\b[ ](bg:$style fg:black)$conflicted$staged$modified$renamed$deleted$untracked$stashed$ahead_behind[](fg:$style))"
 conflicted = "[ ](bold fg:88 bg:#d8712c)[  ${count} ](fg:black bg:#d8712c)"
-staged = "[🟢 $count ](fg:black bg:#d8712c)"
-modified = "[🔴 ${count} ](fg:black bg:#d8712c)"
+staged = "[🠕$count ](fg:black bg:#d8712c)"
+modified = "[↓${count} ](fg:black bg:#d8712c)"
 renamed = "[🟡 ${count} ](fg:black bg:#d8712c)"
-deleted = "[❌ ${count} ](fg:black bg:#d8712c)"
-untracked = "[️🔴 ${count} ](fg:black bg:#d8712c)"
+deleted = "[✗${count} ](fg:black bg:#d8712c)"
+untracked = "[️↓${count} ](fg:black bg:#d8712c)"
 stashed = "[ ${count} ](fg:black bg:#d8712c)"
 ahead = "[ ${count} ](fg:#523333 bg:#d8712c)"
 behind = "[ ${count} ](fg:black bg:#d8712c)"
@@ -90,13 +90,6 @@ format = "[](fg:black bg:#eb9606)[$symbol$version]($style)[](fg:#eb9606)"
 format = "[](fg:black bg:#ad4007)[$symbol$context](fg:black bg:#ad4007)[](fg:#ad4007)"
 disabled = false
 
-#[memory_usage]
-#style = "#f9a600"
-#symbol = " "
-#format = "[](fg:black bg:#f9a600)[$symbol$ram](bg:$style fg:black)[](fg:$style)"
-#threshold = 95
-#disabled = false
-
 [nodejs]
 style = "green"
 format = "[](fg:black bg:#eb9606)[$symbol($version)](fg:black bg:#eb9606)[](fg:#eb9606)"
@@ -113,9 +106,9 @@ style = "fg:black bg:#eb9606"
 format = "[](fg:black bg:#eb9606)[$symbol$version]($style)[](fg:#eb9606)"
 
 [python]
-symbol = "🌀 "
+symbol = "🐍 "
 style = "fg:black bg:#556B2F"
-format = "[](fg:black bg:#36454F)[$symbol$pyenv_prefix$version$virtualenv]($style)[](fg:#556B2F)"
+format = "[](fg:black bg:#36454F)[$symbol$pyenv_prefix$version $virtualenv]($style)[](fg:#556B2F)"
 
 [ruby]
 symbol = " "
@@ -139,11 +132,6 @@ bash_indicator = "bash "
 zsh_indicator = "zsh "
 powershell_indicator = ""
 format = "[$indicator](fg:#ad4007)"
-disabled = false
-[shlvl]
-symbol = " "
-style = "fg:black bg:#ad4007"
-format = "[](fg:black bg:#ad4007)[$symbol$shlvl]($style)[](fg:#ad4007)"
 disabled = false
 
 [terraform]

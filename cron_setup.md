@@ -30,6 +30,8 @@ Add the below to you crontab file
 #   00 12 * * * /path/to/executable/script_name.extension
 
 * * * * * echo "Cron job ran at $(date)" > /path/to/log_folder/log_file.log
+
+# * * * * *  /path/to/code/cronjobs/test.sh > /path/to/code/cronjobs/cronjobs.log
 ```
 
 NB!: You must save and exit before crontab registers changes.

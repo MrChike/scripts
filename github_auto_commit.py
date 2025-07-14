@@ -6,29 +6,17 @@ from datetime import datetime
 # Set your GitHub repository folder path
 REPO_PATH = [
     # "/path/to/repo/folder",
-    "/home/mrchike/code/projects/Leetcode",
-    "/home/mrchike/code/projects/next13-lms-platform",
-    "/home/mrchike/code/projects/next13-lms-platform-api",
-    "/home/mrchike/code/projects/chikeegonu",
-    "/home/mrchike/code/contributions/tensorflow",
-    "/home/mrchike/code/contributions/flink",
-    "/home/mrchike/code/contributions/odoo",
-    "/home/mrchike/code/contributions/spotify",
-    "/home/mrchike/code/scripts"
+    "/home/mrchike/code/scripts",
+    "/home/mrchike/code/open_source/cal.com",
+    "/home/mrchike/code/open_source/scikit-learn"
 ]
 
 # Set your GitHub remote URL
 GITHUB_URL = [
     # "repo git url",
-    "git@github.com:MrChike/Leetcode.git",
-    "git@github.com:MrChike/LMS.git",
-    "git@github.com:MrChike/LMS-API.git",
-    "git@github.com:MrChike/chikeegonu.git",
-    "git@github.com:MrChike/tensorflow.git",
-    "git@github.com:MrChike/flink.git",
-    "git@github.com:MrChike/odoo.git",
-    "git@github.com:MrChike/spotify-clone.git",
-    "git@github.com:MrChike/automate.git"
+    "git@github.com:MrChike/automate.git",
+    "git@github.com:MrChike/cal.com.git",
+    "git@github.com:MrChike/scikit-learn.git"
 ]
 
 def retrieve_current_branch():

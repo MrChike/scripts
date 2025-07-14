@@ -19,6 +19,8 @@ GITHUB_URL = [
     "git@github.com:MrChike/scikit-learn.git"
 ]
 
+print(f"/home/mrchike/code/scripts/github_auto_commit.py ran @ {datetime.now()}")
+
 def retrieve_current_branch():
     branch_list = subprocess.run(['git', 'branch'], capture_output=True, text=True).stdout.strip()
     pattern = r"\* (\S+)"

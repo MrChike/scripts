@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LOG_FILE=/home/mrchike/code/cronjobs/cron_jobs.log
-echo "Cron job ran at $(date)" >> $LOG_FILE
+echo "/home/mrchike/code/scripts/deploy_portfolio.sh ran @ $(date)" >> $LOG_FILE
 
 cd /home/mrchike/code/projects/portfolio
 

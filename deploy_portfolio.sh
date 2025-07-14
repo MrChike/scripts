@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo " " 
 LOG_FILE=/home/mrchike/code/cronjobs/cron_jobs.log
 
 cd /home/mrchike/code/projects/portfolio
@@ -11,6 +12,8 @@ cd /home/mrchike/code/projects/portfolio
 # Activate the virtual environment
 source /home/mrchike/code/cronjobs/env/bin/activate
 
-echo "/home/mrchike/code/scripts/deploy_portfolio.sh ran @ $(date)" >> $LOG_FILE
 # Use full path to mkdocs
 /home/mrchike/.local/bin/mkdocs gh-deploy >> $LOG_FILE
+
+echo " " 
+echo "/home/mrchike/code/scripts/deploy_portfolio.sh ran @ $(date)" >> $LOG_FILE

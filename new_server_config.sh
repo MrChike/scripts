@@ -1,5 +1,48 @@
 #!/bin/bash
 
+echo "-------------------------SET UP LINUX SERVER--------------------------------------------"
+
+# Exit immediately if a command exits with a non-zero status
+set -e
+
+# Update package lists and upgrade existing packages
+sudo apt -y update && sudo apt -y upgrade
+
+# Install Docker, Docker Compose, and add current user to docker group for non-root access
+sudo apt -y install docker.io
+sudo apt install -y docker-compose
+sudo usermod -aG docker $USER 
+
+# Install Python 3.10 virtual environment package
+sudo apt -y install python3.10-venv
+
+# Install pip for Python 3
+sudo apt -y install python3-pip
+
+# Install OpenSSH server and enable/start the SSH service
+sudo apt -y install openssh-server
+sudo systemctl enable ssh
+sudo systemctl start ssh
+
+# Allow SSH through the firewall and enable UFW (Uncomplicated Firewall)
+sudo ufw allow ssh
+sudo ufw enable
+
+# Generate a new RSA SSH key pair with no passphrase and a comment for identification
+ssh-keygen -t rsa -f ~/.ssh/id_rsa -N "" -C "ssh-key created"
+
+# Reboot the system to apply changes such as docker group membership
+sudo shutdown -r now
+
+# (Post-reboot commands, to be run manually or scripted after reboot)
+
+# Display the system’s IP address on the network
+hostname -I
+
+# Securely copy a file to a remote server via SSH (replace placeholders with actual values)
+scp 'file' hostname@hostIP:/path/to/directory/
+
+
 echo "-------------------------SET UP WSL ON WINDOWS--------------------------------------------"
 # Remove wsl distro on windows
 wsl --unregister Ubuntu-22.04
@@ -32,20 +75,3 @@ OracleLinux_9_5                 Oracle Linux 9.5
 
 wsl --install <Distro> # Install Distro
 wsl -d <Distro> # Launch/Start Distro
-
-
-echo "-------------------------SET UP SERVER--------------------------------------------"
-
-set -e
-
-sudo apt -y update && sudo apt -y upgrade
-sudo apt -y install docker.io && sudo apt install -y docker-compose && sudo usermod -aG docker $USER 
-sudo apt -y install python3.10-venv
-sudo apt install -y openssh-server && sudo systemctl enable ssh && sudo systemctl start ssh
-sudo ufw allow ssh && sudo ufw enable
-ssh-keygen -t rsa -f ~/.ssh/id_rsa -N "" -C "ssh-key created"
-
-sudo shutdown -r now
-
-hostname -I # Display's host's IP
-scp 'file' hostname@hostIP:/path/to/directory/ # Copy's file to host server

@@ -9,32 +9,49 @@ Add the below to you crontab file
 
 ```bash
 # Edit this file to introduce tasks to be run by cron.
-# 
-# To define the time, provide concrete values for:
+#
+# To define the time you can provide concrete values for
 # minute (m), hour (h), day of month (dom), month (mon),
 # and day of week (dow) or use '*' in these fields (for 'any').
 #
-# For more details, see the manual pages of crontab(5) and cron(8).
+# For more information see the manual pages of crontab(5) and cron(8)
 #
 # Format:
 #   m h dom mon dow command
 # or
 #   * h dom  *  dow command
-# Example: Every 30 minutes
-#   */30 * * * * /path/to/script
+# */30 * * * * /path/to/script --> Where */30 == every 30 minutes
 #
 # The two cron jobs below:
 # Run script at midnight:
 #   00 00 * * * /path/to/executable/script_name.extension
+#
 # Run script at noon:
 #   00 12 * * * /path/to/executable/script_name.extension
+#
+# Real Example Below
 
-* * * * * echo "Cron job ran at $(date)" > /path/to/log_folder/log_file.log
+# Executes commands daily at 3am
+00 03 * * * /usr/bin/python3 /home/mrchike/code/scripts/github_auto_commit.py > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+00 03 * * * /home/mrchike/code/scripts/deploy_portfolio.sh >> /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
 
-# * * * * *  /path/to/code/cronjobs/test.sh > /path/to/code/cronjobs/cronjobs.log
+# Executes commands daily at 9am
+00 09 * * * /usr/bin/python3 /home/mrchike/code/scripts/github_auto_commit.py > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+00 09 * * * /home/mrchike/code/scripts/deploy_portfolio.sh >> /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+
+# Executes commands daily at 5pm
+00 17 * * * /usr/bin/python3 /home/mrchike/code/scripts/github_auto_commit.py > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+00 17 * * * /home/mrchike/code/scripts/deploy_portfolio.sh >> /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+
+# Executes commands every minute
+* * * * *  /home/mrchike/code/cronjobs/cron_jobs.sh > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+* * * * * echo "Cron job ran at $(date)" > /path/to/log_folder/log_file.log 2>&1
+
+# Executes commands every 30 minute
+*/30 * * * *  /home/mrchike/code/cronjobs/cron_jobs.sh > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
 ```
 
-NB!: You must save and exit before crontab registers changes.
+# NB!: You must save and exit before crontab registers changes.
 
 ## Step 2: Troubleshoot crontab issues (if any)
 If you see the following error when running 'crontab -e', don't worry: This error is often harmless but check to ensure that the crontab file saved correctly.
@@ -76,4 +93,10 @@ grep CRON /var/log/syslog | grep 'script_name.extension'
 Jul 13 20:39:01 system-name CRON[44674]: (your-username) CMD (/path/to/executable/script_name.extension)
 ```
 
-Congrats! You've setup your cron automation
+## Step 5: Inspect CRON Logs for debugging 
+```bash
+grep cron /var/log/syslog > /tmp/cronlog.txt && code /tmp/cronlog.txt
+
+```
+
+# 🎉 Congrats! You've successfully set up your cron automation ✅

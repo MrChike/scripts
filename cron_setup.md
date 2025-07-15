@@ -31,24 +31,35 @@ Add the below to you crontab file
 #
 # Real Example Below
 
+# * * * * /usr/bin/python3 /path/to/script.py > /path/to//log_file.log 2>&1
+
 # Executes commands daily at 3am
-00 03 * * * /usr/bin/python3 /home/mrchike/code/scripts/github_auto_commit.py > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
-00 03 * * * /home/mrchike/code/scripts/deploy_portfolio.sh >> /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+# 00 03 * * * /usr/bin/python3 ~/code/scripts/github_auto_commit.py > ~/code/cronjobs/cron_jobs.log 2>&1
+# 00 03 * * * ~/code/scripts/deploy_portfolio.sh >> ~/code/cronjobs/cron_jobs.log 2>&1
 
 # Executes commands daily at 9am
-00 09 * * * /usr/bin/python3 /home/mrchike/code/scripts/github_auto_commit.py > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
-00 09 * * * /home/mrchike/code/scripts/deploy_portfolio.sh >> /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+# 00 09 * * * /usr/bin/python3 ~/code/scripts/github_auto_commit.py > ~/code/cronjobs/cron_jobs.log 2>&1
+# 00 09 * * * ~/code/scripts/deploy_portfolio.sh >> ~/code/cronjobs/cron_jobs.log 2>&1
 
-# Executes commands daily at 5pm
-00 17 * * * /usr/bin/python3 /home/mrchike/code/scripts/github_auto_commit.py > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
-00 17 * * * /home/mrchike/code/scripts/deploy_portfolio.sh >> /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+# Executes commands daily at 12pm
+# 00 12 * * * /usr/bin/python3 ~/code/scripts/github_auto_commit.py > ~/code/cronjobs/cron_jobs.log 2>&1
+# 00 12 * * * ~/code/scripts/deploy_portfolio.sh >> ~/code/cronjobs/cron_jobs.log 2>&1
+
+# Executes commands daily at 3pm
+# 00 15 * * * /usr/bin/python3 ~/code/scripts/github_auto_commit.py > ~/code/cronjobs/cron_jobs.log 2>&1
+# 00 15 * * * ~/code/scripts/deploy_portfolio.sh >> ~/code/cronjobs/cron_jobs.log 2>&1
+
+# Executes commands daily at 6pm
+# 00 18 * * * /usr/bin/python3 ~/code/scripts/github_auto_commit.py > ~/code/cronjobs/cron_jobs.log 2>&1
+# 00 18 * * * ~/code/scripts/deploy_portfolio.sh >> ~/code/cronjobs/cron_jobs.log 2>&1
 
 # Executes commands every minute
-* * * * *  /home/mrchike/code/cronjobs/cron_jobs.sh > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
-* * * * * echo "Cron job ran at $(date)" > /path/to/log_folder/log_file.log 2>&1
+# * * * * *  ~/code/cronjobs/cron_jobs.sh >> ~/code/cronjobs/cron_jobs.log 2>&1
 
 # Executes commands every 30 minute
-*/30 * * * *  /home/mrchike/code/cronjobs/cron_jobs.sh > /home/mrchike/code/cronjobs/cron_jobs.log 2>&1
+# */30 * * * *  ~/code/cronjobs/cron_jobs.sh >> ~/code/cronjobs/cron_jobs.log 2>&1
+
+* * * * * echo "Cron job ran at $(date)" >> ~/cron_jobs.log 2>&1
 ```
 
 # NB!: You must save and exit before crontab registers changes.

@@ -13,6 +13,10 @@ sudo apt -y install docker.io
 sudo apt install -y docker-compose
 sudo usermod -aG docker $USER 
 
+# Install useful dependencies
+sudo apt -y install tree
+sudo apt -y install vim
+
 # Install Python 3.10 virtual environment package
 sudo apt -y install python3.10-venv
 
@@ -29,7 +33,37 @@ sudo ufw allow ssh
 sudo ufw enable
 
 # Generate a new RSA SSH key pair with no passphrase and a comment for identification
-ssh-keygen -t rsa -f ~/.ssh/id_rsa -N "" -C "ssh-key created"
+ssh-keygen -t rsa -f ~/.ssh/id_rsa -N "" -C "ssh-key"
+
+# Scaffold Project Directory Structure
+mkdir ~/code
+cd ~/code && mkdir -p cronjobs/playground education open_source projects scripts && touch cronjobs/cron_jobs.log cronjobs/cron_jobs.sh projects/Journal.md 
+cd ~/code/cronjobs && chmod +x cron_jobs.log cron_jobs.sh
+
+echo 'export EDITOR=vim' >> ~/.bashrc
+
+cat <<EOF > ~/code/projects/Journal.md
+# 📝 Journal
+
+## TODO
+- Placeholder for future tasks
+
+## Commands
+
+```bash
+
+```
+
+## Error Logs & Fixes
+
+```bash
+
+```
+
+## Resource Findings
+- https://
+
+EOF
 
 # Reboot the system to apply changes such as docker group membership
 sudo shutdown -r now

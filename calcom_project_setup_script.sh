@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt update && apt install -y docker.io docker-compose vim iputils-ping
+git config --global --add safe.directory /calcom
 cp -n .env.example .env
 cp -n apps/api/v2/.env.example apps/api/v2/.env
 

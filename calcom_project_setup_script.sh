@@ -1,7 +1,7 @@
 #!/bin/bash
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+export NVM_DIR="/root/.nvm"
 source "$NVM_DIR/nvm.sh"
 
 git config --global --add safe.directory /calcom

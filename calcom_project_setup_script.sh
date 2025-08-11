@@ -8,7 +8,7 @@ git config --global --add safe.directory /calcom
 cp -n .env.example .env
 cp -n apps/api/v2/.env.example apps/api/v2/.env
 
-echo 'REDIS_URL="redis://redis:6379"' >> .env
+grep -qxF 'REDIS_URL="redis://redis:6379"' .env || echo 'REDIS_URL="redis://redis:6379"' >> .env
 
 # GENERATE VAPID KEYS
 output=$(yes | npx web-push generate-vapid-keys)

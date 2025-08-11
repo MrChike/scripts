@@ -1,5 +1,9 @@
 #!/bin/bash
 
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
+
 git config --global --add safe.directory /calcom
 cp -n .env.example .env
 cp -n apps/api/v2/.env.example apps/api/v2/.env

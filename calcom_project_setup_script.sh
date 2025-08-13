@@ -4,8 +4,6 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 export NVM_DIR="/root/.nvm"
 source "$NVM_DIR/nvm.sh"
 
-npm install web-push@3.6.7 --no-save
-
 git config --global --add safe.directory /calcom
 cp -n .env.example .env
 cp -n apps/api/v2/.env.example apps/api/v2/.env

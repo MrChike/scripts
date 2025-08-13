@@ -61,6 +61,16 @@ services:
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
+  redisinsight:
+    # http://localhost:5540/  
+    # Log into Redis DB with Connection URL -> redis://:root@redis:6379
+    image: redis/redisinsight:2.70
+    container_name: calcom_redis-insight
+    depends_on:
+      - redis
+    ports:
+      - "0.0.0.0:5540:5540"
+
 
 volumes:
   redis_data:

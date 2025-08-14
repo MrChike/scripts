@@ -6,25 +6,16 @@ echo "-------------------------SET UP LINUX SERVER------------------------------
 set -e
 
 # Update package lists and upgrade existing packages
-sudo apt -y update && sudo apt -y upgrade
+sudo apt update && sudo apt upgrade -y
 
 # Install Docker, Docker Compose, and add current user to docker group for non-root access
-sudo apt -y install docker.io
-sudo apt install -y docker-compose
+sudo apt install -y docker.io docker-compose openssh-server
 sudo usermod -aG docker $USER 
 
 # Install useful dependencies
-sudo apt -y install tree
-sudo apt -y install vim
+sudo apt install -y tree vim ufw
 
-# Install Python 3.10 virtual environment package
-sudo apt -y install python3.10-venv
-
-# Install pip for Python 3
-sudo apt -y install python3-pip
-
-# Install OpenSSH server and enable/start the SSH service
-sudo apt -y install openssh-server
+# Enable/start the SSH service
 sudo systemctl enable ssh
 sudo systemctl start ssh
 
@@ -33,7 +24,7 @@ sudo ufw allow ssh
 sudo ufw enable
 
 # Generate a new RSA SSH key pair with no passphrase and a comment for identification
-ssh-keygen -t rsa -f ~/.ssh/id_rsa -N "" -C "ssh-key"
+yes | ssh-keygen -t rsa -f ~/.ssh/id_rsa -N "" -C "ssh-key"
 
 # Scaffold Project Directory Structure
 mkdir ~/code
@@ -42,28 +33,116 @@ cd ~/code/cronjobs && chmod +x cron_jobs.log cron_jobs.sh
 
 echo 'export EDITOR=vim' >> ~/.bashrc
 
-cat <<EOF > ~/code/projects/Journal.md
+# Create Journal.md
+cat <<'EOF' > ~/code/Journal.md
 # 📝 Journal
 
-## TODO
-- Placeholder for future tasks
+## 🧭 Table of Contents
+- ✅ [TODO](#todo)
+- 🧠 [Notes & Learnings](#notes--learnings)
+- 🔗 [Resource Findings](#resource-findings)
+- 💻 [Commands](#commands)
+- 🐞 [Error Logs & Fixes](#error-logs--fixes)
 
-## Commands
+## ✅ TODO
+- Placeholder Task (Start-End ⟶ Duration) • Date
+- Refactored core module for clarity (00:00-00:00 ⟶ 24Hrs) • 01-01-1900
+- Conclude MKDocs Portfolio Setup (03:00-07:00 ⟶ 4Hrs) • 17-07-2025 ✅
 
-```bash
+---
+### 📅 17-07-2025
 
-```
+- **Progress:** Conclude MKDocs Portfolio Setup
+- **Focus:** Improve Online Visibility
+- **Blockers:** Github Actions Setup
+- **Next:** [TO BE UPDATED]
 
-## Error Logs & Fixes
+---
+### 📅 01-01-1900
 
-```bash
+- **Progress:** Refactored core module for clarity
+- **Focus:** Improve maintainability
+- **Blockers:** Unclear API docs slowed down integration  
+- **Next:** Conclude MKDocs Portfolio Setup
 
-```
+---
 
-## Resource Findings
-- https://
+## 🧠 Notes and Learnings
+- Markdown supports collapsible sections using `<details>`
+- Use `kill -9 $(lsof -t -i:<port>)` to free up ports
 
+---
+
+## 🔗 Resource Findings
+- [ChatGPT](https://chatgpt.com/)
+
+---
+
+<details>
+<summary>💻 Commands</summary>
+
+\`\`\`bash
+# List all files including hidden ones
+ls -la
+
+# Print current directory file structure
+tree -L 1
+\`\`\`
+
+</details>
+
+---
+
+<details>
+<summary>🐞 Error Logs & Fixes</summary>
+
+\`\`\`bash
+# Error: ModuleNotFoundError: No module named 'requests'
+# Fix:
+pip install requests
+
+# Error: EADDRINUSE: address already in use
+# Fix:
+kill -9 \$(lsof -t -i:3000)
+\`\`\`
+
+</details>
 EOF
+
+# Generate SSH keys
+yes | ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)" -f ~/.ssh/id_ccr -N ""
+yes | ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)" -f ~/.ssh/id_mrc -N ""
+
+# Set permissions
+chmod 600 ~/.ssh/id_ccr
+chmod 600 ~/.ssh/id_mrc
+
+# Create SSH config
+touch ~/.ssh/config
+
+cat <<EOF > ~/.ssh/config
+Host github-ccr
+    HostName github.com
+    IdentityFile ~/.ssh/id_ccr
+    User git
+    IdentitiesOnly yes
+
+Host github-mrc
+    HostName github.com
+    IdentityFile ~/.ssh/id_mrc
+    User git
+    IdentitiesOnly yes
+EOF
+
+
+echo "------------------------MRC SSH KEY---------------------------------------"
+cat ~/.ssh/id_mrc.pub
+
+echo "------------------------CCR SSH KEY---------------------------------------"
+cat ~/.ssh/id_ccr.pub
+
+echo "--------------------------------------------------------------------------"
+echo "👉 REGISTER YOUR SSH-KEY FOR USER-WIDE OR REPO-SPECIFIC ACCESS ON GITHUB"
 
 # Reboot the system to apply changes such as docker group membership
 sudo shutdown -r now

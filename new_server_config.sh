@@ -28,7 +28,7 @@ yes | ssh-keygen -t rsa -f ~/.ssh/id_rsa -N "" -C "ssh-key"
 
 # Scaffold Project Directory Structure
 mkdir ~/code
-cd ~/code && mkdir -p cronjobs/playground education open_source projects scripts && touch cronjobs/cron_jobs.log cronjobs/cron_jobs.sh projects/Journal.md 
+cd ~/code && mkdir -p cronjobs/playground open_source projects scripts && touch cronjobs/cron_jobs.log cronjobs/cron_jobs.sh projects/Journal.md 
 cd ~/code/cronjobs && chmod +x cron_jobs.log cron_jobs.sh
 
 echo 'export EDITOR=vim' >> ~/.bashrc

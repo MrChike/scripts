@@ -121,13 +121,13 @@ chmod 600 ~/.ssh/id_mrc
 touch ~/.ssh/config
 
 cat <<EOF > ~/.ssh/config
-Host github-ccr
+Host github.com
     HostName github.com
     IdentityFile ~/.ssh/id_ccr
     User git
     IdentitiesOnly yes
 
-Host github-mrc
+Host github.com
     HostName github.com
     IdentityFile ~/.ssh/id_mrc
     User git
